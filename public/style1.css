@@ -10,8 +10,7 @@ Main content styles main {
 
 body {
 
-
-    background-image: url("/./images/bg01.jpg");
+    /* background-image: url("./../images/bg01.jpg"); */
     background-size: cover;
     /* make it fill the screen */
     background-repeat: no-repeat;

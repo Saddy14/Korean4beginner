@@ -3,6 +3,16 @@ body {
     background: #0e1013;
     color: #eaeaea;
     padding: 20px;
+
+    background-image: url("../images/bg02.jpg");
+    background-size: cover;
+    /* make it fill the screen */
+    background-repeat: no-repeat;
+    /* prevent tiling */
+    background-attachment: fixed;
+    /* stays in place when scrolling */
+    background-position: center;
+    /* center the image */
 }
 
 .container {
@@ -113,5 +123,3 @@ h1 {
     background-color: #555;
     border-radius: 4px;
 }
-
-

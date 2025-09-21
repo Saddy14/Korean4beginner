@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quiz | LearnK</title>
+    <link rel="shortcut icon" href="./../images/icon.png" type="image/x-icon">
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --card: #0f1113;
+            --muted: #9aa0a6;
+            --accent: linear-gradient(90deg, #6ee7b7, #7dd3fc);
+            --text: #fff;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: min(720px, 96%)
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111315;
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        nav .logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav ul li a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .15s
+        }
+
+        nav ul li a:hover {
+            color: #fff
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 20px;
+            font-size: 28px
+        }
+
+        .quiz-card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 18px
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: left;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background .15s;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.12)
+        }
+
+        .option-btn.correct {
+            background: #22c55e
+        }
+
+        .option-btn.wrong {
+            background: #ef4444
+        }
+
+        .controls {
+            margin-top: 20px;
+            text-align: center
+        }
+
+        .controls button {
+            background: var(--accent);
+            color: #02111a;
+            font-weight: 700;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 0 6px;
+            transition: transform .12s;
+        }
+
+        .controls button:active {
+            transform: scale(.96)
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 600
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">LearnK</div>
+            <ul>
+                <li><a href="./../index.html">Home</a></li>
+                <li><a href="./../flashcards/flashcard.html">Flashcards</a></li>
+                <li><a href="./../contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <h1>Vocabulary Quiz</h1>
+        <div class="quiz-card">
+            <div id="question" class="question"></div>
+            <div id="options" class="options"></div>
+            <div class="controls">
+                <button onclick="prevQuestion()">Previous</button>
+                <button onclick="nextQuestion()">Next</button>
+            </div>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What does '사과' 'sagwa' mean?", options: ["Apple", "Banana", "Grape", "Juice"], answer: "Apple" },
+            { question: "What does '물' 'mul' mean?", options: ["Water", "Milk", "Juice", "Soup"], answer: "Water" },
+            { question: "What does '주스' 'juseu' mean?", options: ["Juice", "Stew", "Vegetable", "Rice"], answer: "Juice" },
+            { question: "What does '스포츠 센터' 'seupocheu senteo' mean?", options: ["Library", "Sports Center", "School", "Market"], answer: "Sports Center" },
+            { question: "What does '야채' 'yachae' mean?", options: ["Vegetable", "Fruit", "Meat", "Rice"], answer: "Vegetable" }
+        ];
+
+        let current = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = quizData[current];
+            document.getElementById('question').textContent = q.question;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(btn, q.answer);
+                optionsDiv.appendChild(btn);
+            });
+            document.getElementById('result').textContent = '';
+        }
+
+        function selectAnswer(btn, correct) {
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+            if (btn.textContent === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+            }
+            document.getElementById('result').textContent = `Score: ${score}/${quizData.length}`;
+        }
+
+        function nextQuestion() {
+            if (current < quizData.length - 1) {
+                current++;
+                loadQuestion();
+            }
+        }
+        function prevQuestion() {
+            if (current > 0) {
+                current--;
+                loadQuestion();
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>

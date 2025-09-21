@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Flashcards | LearnK</title>
+    <link rel="shortcut icon" href="./../images/icon.png" type="image/x-icon">
+
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --card: #0f1113;
+            --muted: #9aa0a6;
+            --accent: linear-gradient(90deg, #6ee7b7, #7dd3fc);
+            --text: #fff;
+        }
+
+        body.light {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --muted: #475569;
+            --text: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: radial-gradient(circle at 10% 10%, rgba(125, 211, 252, 0.04), transparent 10%),
+                radial-gradient(circle at 90% 90%, rgba(110, 231, 183, 0.03), transparent 10%),
+                var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: background .3s, color .3s;
+        }
+
+        .container {
+            width: min(820px, 96%);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card);
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background .3s;
+        }
+
+        nav .logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav ul li a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .15s
+        }
+
+        nav ul li a:hover {
+            color: var(--text)
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: background .2s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.06)
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.2px
+        }
+
+        p.lead {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 40px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6);
+            transition: transform .28s cubic-bezier(.2, .9, .3, 1), box-shadow .28s, background .3s;
+            text-align: center;
+        }
+
+        body.light .card {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1)
+        }
+
+        .card:active {
+            transform: translateY(2px)
+        }
+
+        .korean {
+            font-size: 44px;
+            font-weight: 700;
+            line-height: 1.05;
+            margin: 0
+        }
+
+        .roman {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .english {
+            margin-top: 18px;
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .22s, transform .22s;
+            color: #38bdf8
+        }
+
+        .english.visible {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 22px
+        }
+
+        button.btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 16px;
+            border-radius: 10px;
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: transform .12s, background .12s, border-color .12s;
+        }
+
+        button.btn:active {
+            transform: scale(.98)
+        }
+
+        button.btn.primary {
+            background: var(--accent);
+            background-clip: padding-box;
+            border: 0;
+            color: #02111a;
+            padding: 10px 18px;
+            box-shadow: 0 6px 18px rgba(125, 211, 252, 0.08);
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .footer-note {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center
+        }
+
+        @media (max-width:480px) {
+            .korean {
+                font-size: 34px
+            }
+
+            .card {
+                padding: 28px
+            }
+
+            nav ul {
+                gap: 10px
+            }
+
+            nav .logo {
+                font-size: 16px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">K-Flashcards</div>
+            <ul>
+                <li><a href="./../index.html">Home</a></li>
+                <li><a href="./../quiz/quiz.html">Quiz</a></li>
+                <li><a href="./../contact.html">Contact Us</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </nav>
+
+        <header>
+            <div>
+                <h1>Korean Flashcards</h1>
+                <p class="lead">Vocabulary words</p>
+            </div>
+            <div style="text-align:right;color:var(--muted);font-size:13px">Progress: <span id="pos">1</span></div>
+        </header>
+
+        <main>
+            <div class="card" id="card" role="button" tabindex="0" aria-pressed="false"
+                title="Click or press space to reveal English">
+                <div>
+                    <div class="korean" id="korean">안녕하세요</div>
+                    <div class="roman" id="roman">annyeonghaseyo</div>
+                    <div class="english" id="english">Hello</div>
+                </div>
+            </div>
+
+            <div class="controls" style="margin-top:20px">
+                <button class="btn" id="prev">◀ Previous</button>
+                <button class="btn primary" id="toggle">Show English</button>
+                <button class="btn" id="next">Next ▶</button>
+            </div>
+
+            <div class="meta">
+                <div id="example" style="max-width:70%"></div>
+                <div id="hint">Tip: ← → keys to navigate • Space to reveal</div>
+            </div>
+
+            <div class="footer-note"></div>
+        </main>
+    </div>
+
+    <script>
+        // Vocabulary list (edit here)
+        const vocab = [
+            { k: '안녕하세요', r: 'annyeonghaseyo', e: 'Hello', ex: '안녕하세요! 만나서 반가워요. (Hello! Nice to meet you.)' },
+            { k: '감사합니다', r: 'gamsahamnida', e: 'Thank you', ex: '도와주셔서 감사합니다. (Thank you for helping me.)' },
+            { k: '사랑', r: 'sarang', e: 'Love', ex: '사랑은 아름다워요. (Love is beautiful.)' },
+            { k: '학교', r: 'hakgyo', e: 'School', ex: '학교에 가요. (I go to school.)' },
+            { k: '음식', r: 'eumsik', e: 'Food', ex: '맛있는 음식을 먹었어요. (I ate delicious food.)' }
+        ];
+
+        let idx = 0;
+        const koreanEl = document.getElementById('korean');
+        const romanEl = document.getElementById('roman');
+        const englishEl = document.getElementById('english');
+        const posEl = document.getElementById('pos');
+        const exampleEl = document.getElementById('example');
+        const card = document.getElementById('card');
+        const toggleBtn = document.getElementById('toggle');
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        const themeToggle = document.getElementById('themeToggle');
+
+        function render() {
+            const item = vocab[idx];
+            koreanEl.textContent = item.k;
+            romanEl.textContent = item.r;
+            englishEl.textContent = item.e;
+            exampleEl.textContent = item.ex;
+            posEl.textContent = (idx + 1) + '/' + vocab.length;
+            englishEl.classList.remove('visible');
+            toggleBtn.textContent = 'Show English';
+            card.setAttribute('aria-pressed', 'false');
+            card.style.transform = 'translateY(-4px)';
+            setTimeout(() => card.style.transform = 'translateY(0)', 220);
+        }
+
+        function showEnglish() {
+            englishEl.classList.add('visible');
+            toggleBtn.textContent = 'Hide English';
+            card.setAttribute('aria-pressed', 'true');
+        }
+        function hideEnglish() {
+            englishEl.classList.remove('visible');
+            toggleBtn.textContent = 'Show English';
+            card.setAttribute('aria-pressed', 'false');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (englishEl.classList.contains('visible')) hideEnglish(); else showEnglish();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            idx = (idx + 1) % vocab.length; render();
+        });
+        prevBtn.addEventListener('click', () => {
+            idx = (idx - 1 + vocab.length) % vocab.length; render();
+        });
+
+        card.addEventListener('click', () => {
+            if (englishEl.classList.contains('visible')) hideEnglish(); else showEnglish();
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowRight') { idx = (idx + 1) % vocab.length; render(); }
+            if (e.code === 'ArrowLeft') { idx = (idx - 1 + vocab.length) % vocab.length; render(); }
+            if (e.code === 'Space') { e.preventDefault(); if (englishEl.classList.contains('visible')) hideEnglish(); else showEnglish(); }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            themeToggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+        });
+
+        render();
+    </script>
+</body>
+
+</html>

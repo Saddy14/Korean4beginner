@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LearnK Grammar</title>
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --card: #0f1113;
+            --muted: #9aa0a6;
+            --accent: linear-gradient(90deg, #6ee7b7, #7dd3fc);
+            --text: #fff;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: min(860px, 96%)
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111315;
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        nav .logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav ul li a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .15s
+        }
+
+        nav ul li a:hover {
+            color: #fff
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0 20px;
+            font-size: 30px
+        }
+
+        section {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 22px
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.6
+        }
+
+        ul {
+            margin: 0 0 12px 20px
+        }
+
+        li {
+            margin-bottom: 6px
+        }
+
+        .example {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 6px 0;
+            font-family: monospace;
+            color: #dbeafe
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">LearnK</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="./flashcards/flashcard.html">Flashcards</a></li>
+                <li><a href="./quiz/quiz.html">Quiz</a></li>
+                <!-- <li><a href="grammar.html">Grammar</a></li> -->
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <h1>Grammar Lessons</h1>
+
+        <section>
+            <h2>Grammar 1: <strong>V - 아요 / 어요</strong></h2>
+            <p>Attached to verb or adjective stems to make sentences polite.</p>
+            <ul>
+                <li><strong>Stems with ㅏ, ㅗ</strong> → + 아요</li>
+                <li><strong>하다</strong> → 해요</li>
+                <li><strong>Stems with ㅓ, ㅜ, ㅣ</strong> → + 어요</li>
+            </ul>
+            <div class="example">공부하다 → 공부해요</div>
+            <div class="example">자다 → 자요</div>
+            <div class="example">먹다 → 먹어요</div>
+        </section>
+
+        <section>
+            <h2>Grammar 2: <strong>N - 을 / 를</strong></h2>
+            <p>These are <strong>object particles</strong>.</p>
+            <ul>
+                <li><strong>을</strong> – used when the noun ends with a consonant
+                    <div class="example">책을 읽어요 → “(I) read a book”</div>
+                </li>
+                <li><strong>를</strong> – used when the noun ends with a vowel
+                    <div class="example">영화를 봐요 → “(I) watch a movie.”</div>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Grammar 3: <strong>N - 에서</strong></h2>
+            <p>Use when something happens at a place or starts from a place.</p>
+            <ul>
+                <li><strong>Place of Action</strong> → “at / in”
+                    <div class="example">학교에서 공부해요 → “I study at school.”</div>
+                </li>
+                <li><strong>Starting Point (origin)</strong> → “from”
+                    <div class="example">한국에서 왔어요 → “I came from Korea.”</div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+
+</html>
